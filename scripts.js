@@ -1,15 +1,16 @@
-//cotacao das moedas
+// Cotacao das moedas
 const USD_PRICE = 5.16;
 const EUR_PRICE = 6.16;
 const GBP_PRICE = 7.00;
 
-//Obtendo os elementos do DOM 
-
+// Obtendo os elementos do DOM 
 const form = document.querySelector("form");
 const amountInput = document.getElementById("amount");
 const currencySelect = document.getElementById("currency"); 
+const footer = document.querySelector("main footer");
+const description = document.getElementById("description");
 
-// Manipulando o input para receber somente numeros 
+// Manipulando o input (Envio de formulario) para receber somente numeros 
 amountInput.addEventListener("input", () => {
     const hasCharactersRegex = /\D+/g;
     amountInput.value = amountInput.value.replace(hasCharactersRegex, "");
@@ -20,7 +21,7 @@ amountInput.addEventListener("input", () => {
     }
 });
 
-//captando o evento de submit (enviar)do formulario 
+// Captando o evento de submit (enviar) do formulario 
 form.onsubmit = (event) => {
     event.preventDefault(); // Evita o envio do formulário
     
@@ -39,6 +40,20 @@ form.onsubmit = (event) => {
 
 //Funcao para converter a moeda 
 function convertCurrency(amount, price , symbol){
-   console.log(amount, price, symbol)
+  try {
+    //exibindo a cotacao da moeda selecionada 
+    description.textContent = `${symbol} 1 = ${price}`
+
+    //aplica a classe css que exibe o footer (resultado da conversao)
+    footer.classList.add("show-result");
+
+
+  } catch (error) {
+    //remove a classe css que exibe o footer (resultado da conversao)
+    footer.classList.remove("show-result");
+
+    console.error("__ERRO__", error);
+    alert("Ocorreu um erro ao converter a moeda. Por favor, tente novamente.");
+  }
 }
 
